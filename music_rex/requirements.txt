@@ -1,0 +1,6 @@
+pandas
+numpy
+pickle
+nltk
+collections
+pprint

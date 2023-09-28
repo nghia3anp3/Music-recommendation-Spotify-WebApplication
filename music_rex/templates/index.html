@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+  <link rel=stylesheet type=text/css href="static/index.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">
+    var resetFields = function () {
+      $('input').val('');
+      $('#features-step').hide();
+      $('#lyrics-step').hide();
+      $('form').fadeIn();
+    };
+
+    $(document).ready(function () {
+      $('#features-step').hide();
+      $('#lyrics-step').hide();
+      $('form').submit(function (e) {
+        var artist = $('#artist').val();
+        var songTitle = $('#song_title').val();
+        e.preventDefault();
+        $('form').fadeOut();
+        $.post('/submit', {
+          songTitle: songTitle,
+          artist: artist
+        }).done(function (features) {
+          $('#features-result').html(JSON.stringify(features, null, 2));
+          // $('#features-step').fadeIn();
+          $.get('/lyrics', {
+            song_title: songTitle,
+            artist: artist
+          }).done(function (lyrics) {
+            $('#lyrics-result').html(lyrics);
+            // $('#lyrics-step').fadeIn();
+            $.ajax({
+                type: 'POST',
+                url: '/playlist',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                  lyrics: lyrics,
+                  features: features
+                })
+            }).done(function (recs) {
+                $('#playlistdemo').attr("src", recs);
+              });
+              
+              console.log(recs);
+            }).fail(function(err) {
+              alert('Playlist errored out');
+            });
+          }).fail(function (err) {
+            alert('Lyrics errored out');
+            resetFields();
+          })
+        }).fail(function (err) {
+          alert('Something went wrong!');
+          resetFields();
+        }).always(function () {
+          // resetFields();
+        });
+      });
+
+  </script>
+  <title>Music Recommendation System</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ml-3 pt-1">
+            <a class="nav-link text-uppercase" href="#">Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="bg">
+    <div class="bg-image">
+      <img src="\static\cropped-1920-1080-1314534.png">
+    </div>
+    <div class="container" id="hero-banner">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+          <h1 id="hero-text">Music Recommendation</h1>
+          <div id="features-step" class="card text-white bg-warning mb-3">
+            <div class="card-header">Step 1</div>
+            <div class="card-body">
+              <h5 class="card-title">Received features from Spotify...</h5>
+              <p class="card-text">
+                <pre id="features-result">
+                  </pre>
+              </p>
+            </div>
+          </div>
+          <div id="lyrics-step" class="card text-white bg-info mb-3">
+            <div class="card-header">Step 2</div>
+            <div class="card-body">
+              <h5 class="card-title">Received Lyrics from Musixmatch...</h5>
+              <p id="lyrics-result" class="card-text">
+              </p>
+            </div>
+          </div>
+          <div class="form-container">
+            <form>
+              <div class="form-group">
+                <input id="artist" type="text" name="artist" placeholder="Song Artist" />
+              </div>
+              <div class="form-group">
+                <input id="song_title" type="text" name="title" placeholder="Song Title" />
+              </div>
+              <button type="submit" class="btn btn-lg btn-outline btn-danger" >Create Similar Song Playlist</button>
+            </form>
+
+
+          </div>
+        </div>
+        <div id="final-result" class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 player-container">
+          <iframe id="playlistdemo" src="https://open.spotify.com/embed/album/4LBtT0FZ3JMjbklNwnW0Ms" height="520" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

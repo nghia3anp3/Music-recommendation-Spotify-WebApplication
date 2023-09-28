@@ -1,0 +1,11 @@
+README.md
+setup.py
+Music_Rex.egg-info/PKG-INFO
+Music_Rex.egg-info/SOURCES.txt
+Music_Rex.egg-info/dependency_links.txt
+Music_Rex.egg-info/requires.txt
+Music_Rex.egg-info/top_level.txt
+music_rex/__init__.py
+music_rex/logger.py
+music_rex/machine_learning.py
+music_rex/music_rex.py

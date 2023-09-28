@@ -1,0 +1,111 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease-in-out;
+  font-family: 'Open Sans"
+}
+.bg {
+  background-image: linear-gradient(to right top, #000000, #191919, #2c2c2c, #3f3f3f, #545454);
+  height: 1000px;
+}
+.bg-image {
+  position: absolute;
+  margin-top: 30px;
+  top: 30px;
+  right: 0px;
+}
+.navbar-light {
+  border: none!important;
+}
+.nav-link {
+  color: rgba(150,150,150,1)!important;
+}
+#hero-banner {
+  padding-top: 100px;   
+}
+#hero-text {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #dd794b;
+  width: 90%;
+  margin-right: auto;
+}
+#features-step {
+  padding: 20px;
+  background-color: lightgray;
+}
+
+input[type="text"] {
+  width: 100%;
+/* Tell the input to use all the available space */
+/* And hide the input's outline, so the form looks like the outline */
+  border: #FF5050 solid 3px;
+  border-radius: 26px;
+  height: 60px;
+  font-size: 1.3em;
+  background-color: white;
+  padding-left: 30px;
+  color: black;
+}
+
+button[title="title"] {
+/* Just a little styling to make it pretty */
+border: none;    
+background-color: #7ba3df;
+color: rgb(104, 10, 10);
+border-radius: 26px;
+position: relative;
+left: -80px;
+padding: 2px 25px;    
+}
+form:hover button[title="title"] {
+  background-image: linear-gradient(to right, #ff6c6c, #ff6565, #ff5f5e,#ff5757, #ff5050);
+  color: white;
+  cursor: pointer;
+}
+iframe {
+  display: block;
+  margin-left: 100px;
+  margin-top: 100px;
+  width: 100%;
+}
+.bolt-icon {
+  color: white;
+  font-size: 20px;
+  margin: 5px 15px;
+}
+@media (max-width: 1200px) {
+  #hero-text {
+      font-size: 3em;
+      margin: auto;
+      text-align: center;
+  }
+  input {
+      font-size: 1em;
+      width: 100%;
+  }
+  form {
+      margin: 100px auto;
+      width: 100%;
+  }
+  .bg-image {
+      width: 50vh;
+      height: auto;
+      overflow: hidden;
+  }
+  .form-container {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 30px;
+  }
+  iframe {
+      margin-left: auto;
+      margin-right: auto;
+  }
+  .bg {
+      height: 1400px;
+  }
+}
+
